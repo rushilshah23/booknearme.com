@@ -4,15 +4,29 @@
 
 <?php
 
-  $servername = "localhost";
-  $username = "root";
-  $password   = "";
-  $database = "bookstore";
+  require "partials/_dbconnect.php";
+  session_start();
 
-  $conn = mysqli_connect($servername,$username,$password,$database);
+  // $servername = "localhost";
+  // $username = "root";
+  // $password   = "";
+  // $database = "bookstore";
 
-  if(!$conn){
-    die("sorry we failed to provide you information ". mysqli_connect_error());
+  // $conn = mysqli_connect($servername,$username,$password,$database);
+
+  // if(!$conn){
+  //   die("sorry we failed to provide you information ". mysqli_connect_error());
+  // }else{
+  //   session_start();
+  //   echo var_dump($_SESSION['user_id']);
+  // }
+
+  if(isset($_SESSION['loggedin']) || (($_SESSION['loggedin'])!=false)){
+    
+  }else{
+    echo"security bug";
+    header("location:/bookstore/loginsystem/loginpage.php");
+    exit;
   }
 
   // if ($_SERVER['REQUEST_METHOD']=='POST'){
@@ -20,7 +34,7 @@
 
 
     $bookname = $_POST["bookname"];
-    $userid = 1;
+    $userid = $_SESSION["user_id"];
     $bookpublisher= $_POST["publisher"];
     $price= $_POST["price"];
     $bookcategoryid = $_POST["bookcategory"];
@@ -112,7 +126,7 @@
     $bookidEdit = $_POST["bookidEdit"];
 
     $bookname = $_POST["booknameEdit"];
-    $userid = 1;
+    $userid = $_SESSION["user_id"];
     $bookpublisher= $_POST["publisherEdit"];
     $price= $_POST["priceEdit"];
     $bookcategoryid = $_POST["bookcategoryEdit"];
@@ -217,6 +231,11 @@
 </head>
 
 <body>
+  <?php
+        require "partials/_navbar.php";
+  ?>
+
+
 
 
           <!-- Button trigger modal -->
@@ -373,7 +392,7 @@
       <tbody>
         <?php
 
-        $sql = "SELECT book_details.book_name, book_details.book_id, book_details.book_publisher, book_category.book_category_name, book_details.book_price, book_images.book_image_location, book_images.book_image_display_name, book_images.book_image_name, book_details.book_description,book_details.book_applied_date from book_details INNER JOIN book_category on book_details.book_category_id = book_category.book_category_id INNER JOIN book_images on book_details.book_image_id = book_images.book_image_id;";
+        $sql = "SELECT book_details.book_name, book_details.book_id, book_details.book_publisher, book_category.book_category_name, book_details.book_price, book_images.book_image_location, book_images.book_image_display_name, book_images.book_image_name, book_details.book_description,book_details.book_applied_date from book_details INNER JOIN book_category on book_details.book_category_id = book_category.book_category_id INNER JOIN book_images on book_details.book_image_id = book_images.book_image_id where book_details.user_id = '{$_SESSION['user_id']}';";
         $result = mysqli_query($conn,$sql); 
         if (mysqli_num_rows($result) > 0) { 
         while ($row= mysqli_fetch_assoc($result)) {

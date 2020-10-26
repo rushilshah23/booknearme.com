@@ -2,6 +2,7 @@
     $successalert = false;
     $failurealert = false;
     $failure_error = "";
+    $thispage = "registerpage";
 
     // if($_SERVER["REQUEST_METHOD"]=="POST"){
 
@@ -17,12 +18,26 @@
             $location = $_POST["location"];
             $university = $_POST["university"];
             $exists = false;
-            if($password == $cpassword && $exists==false){
+            
+            $exists_query = "select * from seller_details where user_email = '$email'";
+            $exists_query_result = mysqli_query($conn,$exists_query);
+            $exists_num = mysqli_num_rows($exists_query_result);
+            if($exists_num > 0){
+                $exists = true;
+                $failurealert = true;
+                $failure_error = "EmailId already exists";
+               
+
+            }
+
+            else if($password == $cpassword && $exists==false){
                 if(strlen($phoneNo)==10){
-                    $createuser_query = "insert into seller_details (user_email,user_password,user_phone_no,user_fname,user_lname,user_location,user_university) values ('$email','$password','$phoneNo','$firstName','$lastName','$location','$university');";
+                    $password_hash = password_hash($password,PASSWORD_DEFAULT);
+                    $createuser_query = "insert into seller_details (user_email,user_password,user_phone_no,user_fname,user_lname,user_location,user_university) values ('$email','$password_hash','$phoneNo','$firstName','$lastName','$location','$university');";
                     $createuser_query_result = mysqli_query($conn,$createuser_query);
                     if($createuser_query_result){
                         $successalert = true;
+                        // header("location:/bookstore/loginsystem/loginpage.php");
                     }else{
                         $failurealert = true;
                         $failure_error = "Something went wrong while creating user";
@@ -31,7 +46,9 @@
                     $failurealert = true;
                     $failure_error = "enter valid phone no";
                 }
-            }else{
+            }
+            
+            else{
                 $failurealert = true;
                 $failure_error = "passwords didn't matched";
              
@@ -47,12 +64,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register Page</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+     <title>Register Page</title>
 </head>
 <body>
     <?php
+
+        $thispage = "register";
     
         require '../partials/_navbar.php';
     ?>
@@ -132,6 +155,16 @@
     <button type="submit" class="btn btn-primary col-md-6" id = "signupsubmit" name = "signupsubmit">Sign Up</button>
     </form>
     </div>
+            <!-- Optional JavaScript; choose one of the two! -->
 
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+    <!-- Option 2: jQuery, Popper.js, and Bootstrap JS
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+    -->
 </body>
 </html>
