@@ -21,7 +21,7 @@
   //   echo var_dump($_SESSION['user_id']);
   // }
 
-  if(isset($_SESSION['loggedin']) || (($_SESSION['loggedin'])!=false)){
+  if(isset($_SESSION['loggedin']) || (($_SESSION['loggedin'])!=false) && ($_SESSION['accountType']==2)){
     
   }else{
     echo"security bug";

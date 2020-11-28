@@ -1,36 +1,36 @@
 <footer class="pt-4 my-md-5 pt-md-5 border-top text-light bg-dark">
-    <div class="row">
+    <div class="row px-5">
       <div class="col-12 col-md">
-        <img class="mb-2" src="/docs/4.5/assets/brand/bootstrap-solid.svg" alt="" width="24" height="24">
-        <small class="d-block mb-3 text-muted">© 2017-2020</small>
+        <img class="mb-2" src="../assets/pagemedia/logos/book1.png" alt="logo" width="50" height="50">
+        <small class="d-block mb-3 text-muted">© 2020-2021</small>
       </div>
       <div class="col-6 col-md">
         <h5>Features</h5>
         <ul class="list-unstyled text-small">
-          <li><a class="text-muted" href="#">Cool stuff</a></li>
-          <li><a class="text-muted" href="#">Random feature</a></li>
-          <li><a class="text-muted" href="#">Team feature</a></li>
-          <li><a class="text-muted" href="#">Stuff for developers</a></li>
-          <li><a class="text-muted" href="#">Another one</a></li>
-          <li><a class="text-muted" href="#">Last time</a></li>
+          <li><a class="text-muted" href="#">Near your school</a></li>
+          <li><a class="text-muted" href="#">Near your home</a></li>
+          <li><a class="text-muted" href="#">2nd hand books for competitive exam</a></li>
+          <li><a class="text-muted" href="#">Most cheapest in the market</a></li>
+          <!-- <li><a class="text-muted" href="#">Another one</a></li>
+          <li><a class="text-muted" href="#">Last time</a></li> -->
         </ul>
       </div>
       <div class="col-6 col-md">
         <h5>Resources</h5>
         <ul class="list-unstyled text-small">
-          <li><a class="text-muted" href="#">Resource</a></li>
-          <li><a class="text-muted" href="#">Resource name</a></li>
-          <li><a class="text-muted" href="#">Another resource</a></li>
-          <li><a class="text-muted" href="#">Final resource</a></li>
+          <li><a class="text-muted" href="#">UPSC books</a></li>
+          <li><a class="text-muted" href="#">Philosophy</a></li>
+          <li><a class="text-muted" href="#">Engineering</a></li>
+          <li><a class="text-muted" href="#">Medical</a></li>
         </ul>
       </div>
       <div class="col-6 col-md">
         <h5>About</h5>
         <ul class="list-unstyled text-small">
-          <li><a class="text-muted" href="#">Team</a></li>
-          <li><a class="text-muted" href="#">Locations</a></li>
-          <li><a class="text-muted" href="#">Privacy</a></li>
-          <li><a class="text-muted" href="#">Terms</a></li>
+          <li><a class="text-muted" href="#">Developers</a></li>
+          <li><a class="text-muted" href="#">Rushil Shah</a></li>
+          <li><a class="text-muted" href="#">Smit Patel</a></li>
+          <li><a class="text-muted" href="#">Chetan Parmar</a></li>
         </ul>
       </div>
     </div>

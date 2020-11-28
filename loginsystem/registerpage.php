@@ -8,7 +8,8 @@
 
         if(isset($_POST['signupsubmit'])){
             require '../partials/_dbconnect.php';
-  
+            
+            $accountType = $_POST["accountType"];
             $email = $_POST["email"];
             $password = $_POST["password"];
             $cpassword = $_POST["cpassword"];
@@ -18,8 +19,49 @@
             $location = $_POST["location"];
             $university = $_POST["university"];
             $exists = false;
-            
-            $exists_query = "select * from seller_details where user_email = '$email'";
+
+
+            if($accountType==2){
+                $exists_query = "select * from seller_details where user_email = '$email'";
+                $exists_query_result = mysqli_query($conn,$exists_query);
+                $exists_num = mysqli_num_rows($exists_query_result);
+                if($exists_num > 0){
+                    $exists = true;
+                    $failurealert = true;
+                    $failure_error = "EmailId already exists";
+                   
+    
+                }
+    
+                else if($password == $cpassword && $exists==false){
+                    if(strlen($phoneNo)==10){
+                        $password_hash = password_hash($password,PASSWORD_DEFAULT);
+                        $createuser_query = "insert into seller_details (user_email,user_password,user_phone_no,user_fname,user_lname,user_location,user_university) values ('$email','$password_hash','$phoneNo','$firstName','$lastName','$location','$university');";
+                        $createuser_query_result = mysqli_query($conn,$createuser_query);
+                        if($createuser_query_result){
+                            $successalert = true;
+                            // header("location:/bookstore/loginsystem/loginpage.php");
+                        }else{
+                            $failurealert = true;
+                            $failure_error = "Something went wrong while creating user";
+                        }
+                    }else{
+                        $failurealert = true;
+                        $failure_error = "enter valid phone no";
+                    }
+                }
+                
+                else{
+                    $failurealert = true;
+                    $failure_error = "passwords didn't matched";
+                 
+                }
+    
+            }
+
+        else if($accountType==1){
+
+            $exists_query = "select * from buyer_details where user_email = '$email'";
             $exists_query_result = mysqli_query($conn,$exists_query);
             $exists_num = mysqli_num_rows($exists_query_result);
             if($exists_num > 0){
@@ -33,7 +75,7 @@
             else if($password == $cpassword && $exists==false){
                 if(strlen($phoneNo)==10){
                     $password_hash = password_hash($password,PASSWORD_DEFAULT);
-                    $createuser_query = "insert into seller_details (user_email,user_password,user_phone_no,user_fname,user_lname,user_location,user_university) values ('$email','$password_hash','$phoneNo','$firstName','$lastName','$location','$university');";
+                    $createuser_query = "insert into buyer_details (user_email,user_password,user_phone_no,user_fname,user_lname,user_location,user_university) values ('$email','$password_hash','$phoneNo','$firstName','$lastName','$location','$university');";
                     $createuser_query_result = mysqli_query($conn,$createuser_query);
                     if($createuser_query_result){
                         $successalert = true;
@@ -55,6 +97,11 @@
             }
 
         }
+
+        }
+    
+            
+
 
 
     // }
@@ -111,9 +158,23 @@
 
 
 
-    <h1 class = "text-center p-2">Sign up as seller on booknearme.com</h1>
+    <h1 class = "text-center p-2">Sign up</h1>
     <div class="container">
     <form action = "/bookstore/loginsystem/registerpage.php" method="POST">
+
+        <div class="input-group mb-3 col-md-6">
+    <div class="input-group-prepend">
+        <label class="input-group-text" for="accountType">Account Type</label>
+    </div>
+    <select class="custom-select" id="accountType" name="accountType">
+        <option selected>Choose...</option>
+        <option value="1" selected>Buyer</option>
+        <option value="2">Seller</option>
+
+    </select>
+    </div>
+
+
     <div class="form-group col-md-6 ">
         <label for="exampleInputEmail1">Email address</label>
         <input type="email" class="form-control" id="email" aria-describedby="email" name="email">
