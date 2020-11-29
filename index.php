@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
     integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous" />
   <link rel="stylesheet" href="css/index.css" />
+  <link rel="stylesheet" href="style.css">
 
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
@@ -37,14 +38,46 @@
   <?php
     session_start();
         require "partials/_navbar.php";
+
+        
         $row;
         $fetch_books_query = "SELECT * from book_details INNER JOIN book_images on book_details.book_image_id = book_images.book_image_id where book_details.verifiedstatus = 'verified' and book_details.soldstatus = '0' ";
-
+        
         $no_of_books;
         $no_of_slides;
         $fetch_books_query_result = mysqli_query($conn,$fetch_books_query);
         $no_of_books = mysqli_num_rows($fetch_books_query_result) ;
         $no_of_slides = ceil(($no_of_books/4) + ceil(($no_of_books/4) - ($no_of_books/4)));
+        
+
+
+
+  // Json code
+        // $fetch_books_query_result_json = array();
+        // while($row = mysqli_fetch_assoc($fetch_books_query_result)){
+        //   $fetch_books_query_result_json[] = $row;
+        // }
+        // // echo "<pre>";
+        // $fetch_books_query_result_json =  json_encode($fetch_books_query_result_json);
+        // echo $fetch_books_query_result_json;
+
+
+// xml code
+
+// while($row = mysqli_fetch_assoc($fetch_books_query_result)){
+//   foreach($row as $key=>$value){
+//     echo "<$key>$value</$key";
+//   }
+
+// }
+
+
+
+
+
+
+
+
       
         // while($row = mysqli_fetch_array($fetch_books_query_result,MYSQLI_ASSOC)){
         //     echo "<h1> ".$row['book_id']." - ". $row['book_name']."</h1>";
@@ -172,10 +205,10 @@ for($j=0;$j<$no_of_slides;$j++){
   <div class="carousel-item';if($j==0){echo' active"';}echo'>
   <div class="row">';
   
-  for($k=0;$k<4;$k++){
-    $index = 0;
-    while(($row = mysqli_fetch_array($fetch_books_query_result,MYSQLI_ASSOC)) && $index<4 ){
-              $index++;
+  for($book_count=0;$book_count<$book_count+4;$book_count++){
+    
+    while(($row = mysqli_fetch_array($fetch_books_query_result,MYSQLI_ASSOC))){
+             
               
               if($book_count != $no_of_books){
 
@@ -202,7 +235,7 @@ for($j=0;$j<$no_of_slides;$j++){
                 </div>
               </div>';
             
-            $book_count++;
+        
                 }
               }
             }
