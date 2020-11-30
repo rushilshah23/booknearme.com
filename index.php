@@ -172,7 +172,7 @@
 
 
 
-
+<!-- product carousel try 1
   <div class="container">
     <div class="row">
       <div class="col-md-12">
@@ -183,21 +183,19 @@
           <?php
         $book_count = 0;
         $count = 1;
-        for($i=0;$i<$no_of_slides;$i++){
+        for($i=0;$i<$no_of_slides-1;$i++){
           echo' <li data-target="#myCarousel" data-slide-to="'. $i .''; if($i==0){echo ' class = "active" ';} echo'></li>';
           
         }
         ?>
 
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-				   <li data-target="#myCarousel" data-slide-to="1"></li>
-           <li data-target="#myCarousel" data-slide-to="2"></li>
 
           </ol>
           <!-- Wrapper for carousel items -->
           <div class="carousel-inner">
             <?php
 
+while(($row = mysqli_fetch_array($fetch_books_query_result,MYSQLI_ASSOC))){
 for($j=0;$j<$no_of_slides;$j++){
   
   echo'
@@ -205,9 +203,8 @@ for($j=0;$j<$no_of_slides;$j++){
   <div class="carousel-item';if($j==0){echo' active"';}echo'>
   <div class="row">';
   
-  for($book_count=0;$book_count<$book_count+4;$book_count++){
+  for($i=0;$i<4;$i++){
     
-    while(($row = mysqli_fetch_array($fetch_books_query_result,MYSQLI_ASSOC))){
              
               
               if($book_count != $no_of_books){
@@ -237,13 +234,14 @@ for($j=0;$j<$no_of_slides;$j++){
             
         
                 }
+                $book_count++;
               }
-            }
               echo'
               </div>
               </div>
               
               ';}
+            }
               
               echo '</div>';
 
@@ -263,9 +261,8 @@ for($j=0;$j<$no_of_slides;$j++){
             </a>
           </div>
         </div>
-      </div>
-    </div>';
-    ?>
+        </div>';
+    ?> 
 
 
 
