@@ -23,6 +23,7 @@
     integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous" />
   <link rel="stylesheet" href="css/index.css" />
   <!-- <link rel="stylesheet" href="style.css"> -->
+  <link rel="stylesheet" href="css/style(smit).css">
 
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
@@ -42,10 +43,16 @@
         
         $row;
         $fetch_books_query = "SELECT * from book_details INNER JOIN book_images on book_details.book_image_id = book_images.book_image_id where book_details.verifiedstatus = 'verified' and book_details.soldstatus = '0' ";
-        
+        $fetch_books_date_query = "SELECT * from book_details INNER JOIN book_images on book_details.book_image_id = book_images.book_image_id where book_details.verifiedstatus = 'verified' and book_details.soldstatus = '0' order by book_details.book_applied_date DESC ";
+        $fetch_books_price_query = "SELECT * from book_details INNER JOIN book_images on book_details.book_image_id = book_images.book_image_id where book_details.verifiedstatus = 'verified' and book_details.soldstatus = '0' order by book_details.book_price ASC ";
+
         $no_of_books;
         $no_of_slides;
         $fetch_books_query_result = mysqli_query($conn,$fetch_books_query);
+        $fetch_books_date_query_result = mysqli_query($conn,$fetch_books_date_query);
+        $fetch_books_price_query_result = mysqli_query($conn,$fetch_books_price_query);
+
+
         $no_of_books = mysqli_num_rows($fetch_books_query_result) ;
         $no_of_slides = ceil(($no_of_books/4) + ceil(($no_of_books/4) - ($no_of_books/4)));
         
@@ -96,7 +103,7 @@
     </ol>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img class="d-block w-100" src="assets/pagemedia/books.jpg" alt="First slide" />
+        <img class="d-block w-100 " src="assets/pagemedia/books.jpg" alt="First slide" />
         <div class="carousel-caption d-none d-md-block">
           <h5>Why to buy new book if you have one near you?</h5>
           <p>Get books around your location or at your university</p>
@@ -199,76 +206,108 @@
 
     <!-- product slider 1 -->
 
-    <h3 style="text-align: center; padding-top: 0.5rem">BOOKS NEAR YOU</h3>
+    
+    <div class="carousel-wrapper">
+      <h3 style="text-align: center; padding-top: 0.5rem">BOOKS NEAR YOU</h3>
+      <div class="carousel" data-flickity>
+          <?php
 
-    <?php
-      $book_count = 0;
-      $count = 1;
-
-
-
-
-      echo "
-      <div>
-      <div class='container carousel-inner no-padding'>";
-        for($i=0;$i<$no_of_slides;$i++){
-            echo "<div class='carousel-item "; if($i==0){echo " active'";} echo ">";
-            // echo "<div class='carousel-item active>";
-
-            for($j=0;$j<4;$j++){
-                while($row = mysqli_fetch_array($fetch_books_query_result,MYSQLI_ASSOC)){
-                
-                if($book_count != $no_of_books){
-                    echo "
-                    <div class='col-xs-3 col-sm-3 col-md-3'>
-                    <div class='card' style='width: 18rem'>
-                      <img class='card-img-top' src=".$row['book_image_location']." alt='Card image cap' />
-                      <div class='card-body'>
-                        <h5 class='card-title'>".$row['book_name']." </h5>
-                        <h6 class='card-title'>".$row['book_publisher']."</h6>
-                        <p class='card-text'>
-                         Price: ".$row['book_price']."
-                        </p>
-                        <a href='/bookstore/productpage.php?book_id=".$row['book_id']."' class='btn btn-primary'>View Book</a>
-                      </div>
-                    </div>
-                  </div>
-                    
-                    ";
-                    $count=$count+1;
-                    $book_count = $book_count + 1;
-                }
-            }
-          }
-            echo "
-            
-            
-            </div>";
-            mysqli_free_results($fetch_books_query_resul);
-        }
-        
-      
-        echo "</div>
+    
+      while($row = mysqli_fetch_array($fetch_books_query_result,MYSQLI_ASSOC)){
+        echo '
+        <div class="carousel-cell"  >
+        <h3>'.$row['book_name'].'</h3>
+        <a class="more" href="/bookstore/productpage.php?book_id='.$row['book_id'].'">Explore More</a>
+        <img src="'.$row['book_image_location'].'">
+        <div class="line"></div>
+        <div class="price">
+          <span>₹<sup>'.$row['book_price'].'</sup></span>
         </div>
-        ";
+      </div>
         
-        ?>
-        <a class='carousel-control-prev' href='#carouselExampleControls' role='button' data-slide='prev'>
-            <span class='carousel-control-prev-icon' aria-hidden='true'></span>
-            <span class='sr-only'>Previous</span>
-        </a>
-        <a class='carousel-control-next' href='#carouselExampleControls' role='button' data-slide='next'>
-            <span class='carousel-control-next-icon' aria-hidden='true'></span>
-            <span class='sr-only'>Next</span>
-        </a>
+        ';
+
+      }
+     
+      ?>
 
 
-
-
- 
-
+      </div>
+  </div>
 
     <!-- end of product slider 1 -->
+
+
+
+
+
+        <!-- product slider 2 -->
+
+    
+        <div class="carousel-wrapper">
+      <h3 style="text-align: center; padding-top: 0.5rem">LATEST BOOKS ADDED</h3>
+      <div class="carousel" data-flickity>
+          <?php
+
+    
+      while($row = mysqli_fetch_array($fetch_books_date_query_result,MYSQLI_ASSOC)){
+        echo '
+        <div class="carousel-cell"  >
+        <h3>'.$row['book_name'].'</h3>
+        <a class="more" href="/bookstore/productpage.php?book_id='.$row['book_id'].'">Explore More</a>
+        <img src="'.$row['book_image_location'].'">
+        <div class="line"></div>
+        <div class="price">
+          <span>₹<sup>'.$row['book_price'].'</sup></span>
+        </div>
+      </div>
+        
+        ';
+
+      }
+     
+      ?>
+
+
+      </div>
+  </div>
+
+    <!-- end of product slider 2 -->
+
+
+
+            <!-- product slider 3 -->
+
+    
+            <div class="carousel-wrapper">
+      <h3 style="text-align: center; padding-top: 0.5rem">ACCORDING TO PRICE</h3>
+      <div class="carousel" data-flickity>
+          <?php
+
+    
+      while($row = mysqli_fetch_array($fetch_books_price_query_result,MYSQLI_ASSOC)){
+        echo '
+        <div class="carousel-cell"  >
+        <h3>'.$row['book_name'].'</h3>
+        <a class="more" href="/bookstore/productpage.php?book_id='.$row['book_id'].'">Explore More</a>
+        <img src="'.$row['book_image_location'].'">
+        <div class="line"></div>
+        <div class="price">
+          <span>₹<sup>'.$row['book_price'].'</sup></span>
+        </div>
+      </div>
+        
+        ';
+
+      }
+     
+      ?>
+
+
+      </div>
+  </div>
+
+    <!-- end of product slider 3 -->
 
 
 
@@ -277,6 +316,8 @@
     
     <?php require "partials/_footer.php"; ?>
      
+    <!-- smit js -->
+    <script src="https://unpkg.com/flickity@2.0.11/dist/flickity.pkgd.min.js"></script>
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
