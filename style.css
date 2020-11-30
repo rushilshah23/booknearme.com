@@ -62,6 +62,7 @@ h2::after {
 .carousel {
 	margin: 50px auto;
 	padding: 0 70px;
+
 }
 .carousel .carousel-item {
 	min-height: 330px;

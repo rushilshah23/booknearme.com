@@ -42,8 +42,8 @@ $loggedin =false;
 
         echo '
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search a book" aria-label="Search">
+            <form class="form-inline my-2 my-lg-0" action="../bookstore/searchresult.php?book_name=book_name" method="GET">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search a book"name="book_name" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>

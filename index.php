@@ -22,7 +22,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
     integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous" />
   <link rel="stylesheet" href="css/index.css" />
-  <link rel="stylesheet" href="style.css">
+  <!-- <link rel="stylesheet" href="style.css"> -->
 
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
@@ -64,12 +64,7 @@
 
 // xml code
 
-// while($row = mysqli_fetch_assoc($fetch_books_query_result)){
-//   foreach($row as $key=>$value){
-//     echo "<$key>$value</$key";
-//   }
-
-// }
+//    
 
 
 
@@ -84,8 +79,10 @@
             
         //     //  $row['book_id'] ;
         // }
-        echo "<h1> ".$no_of_books."</h1>";
-        echo "<h1> ".$no_of_slides."</h1>";
+
+
+        // echo "<h1> ".$no_of_books."</h1>";
+        // echo "<h1> ".$no_of_slides."</h1>";
 
         // $no_of_books  = $no_of_books -1;
     ?>
@@ -172,97 +169,7 @@
 
 
 
-<!-- product carousel try 1
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <h2>Trending <b>Products</b></h2>
-        <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="0">
-          <!-- Carousel indicators -->
-          <ol class="carousel-indicators">
-          <?php
-        $book_count = 0;
-        $count = 1;
-        for($i=0;$i<$no_of_slides-1;$i++){
-          echo' <li data-target="#myCarousel" data-slide-to="'. $i .''; if($i==0){echo ' class = "active" ';} echo'></li>';
-          
-        }
-        ?>
 
-
-          </ol>
-          <!-- Wrapper for carousel items -->
-          <div class="carousel-inner">
-            <?php
-
-while(($row = mysqli_fetch_array($fetch_books_query_result,MYSQLI_ASSOC))){
-for($j=0;$j<$no_of_slides;$j++){
-  
-  echo'
-  
-  <div class="carousel-item';if($j==0){echo' active"';}echo'>
-  <div class="row">';
-  
-  for($i=0;$i<4;$i++){
-    
-             
-              
-              if($book_count != $no_of_books){
-
-                  echo '
-              <div class="col-sm-3">
-                <div class="thumb-wrapper">
-                  <div class="img-box">
-                    <img src="'.$row['book_image_location'].'" class="img-fluid" alt="">
-                  </div>
-                  <div class="thumb-content">
-                    <h4>'.$row['book_name'].'</h4>
-                    <p class="item-price"><strike>$400.00</strike> <span>$369.00</span></p>
-                    <div class="star-rating">
-                      <ul class="list-inline">
-                        <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                        <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                        <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                        <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                        <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
-                      </ul>
-                    </div>
-                    <a href="#" class="btn btn-primary">Add to Cart</a>
-                  </div>						
-                </div>
-              </div>';
-            
-        
-                }
-                $book_count++;
-              }
-              echo'
-              </div>
-              </div>
-              
-              ';}
-            }
-              
-              echo '</div>';
-
-            ?>
-
-
-
-            <!-- Carousel controls -->
-
-            <?php
-            echo '
-            <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
-              <i class="fa fa-angle-left"></i>
-            </a>
-            <a class="carousel-control-next" href="#myCarousel" data-slide="next">
-              <i class="fa fa-angle-right"></i>
-            </a>
-          </div>
-        </div>
-        </div>';
-    ?> 
 
 
 
@@ -292,7 +199,7 @@ for($j=0;$j<$no_of_slides;$j++){
 
     <!-- product slider 1 -->
 
-    <!-- <h3 style="text-align: center; padding-top: 0.5rem">BOOKS NEAR YOU</h3>
+    <h3 style="text-align: center; padding-top: 0.5rem">BOOKS NEAR YOU</h3>
 
     <?php
       $book_count = 0;
@@ -301,7 +208,9 @@ for($j=0;$j<$no_of_slides;$j++){
 
 
 
-      echo "<div class='container carousel-inner no-padding'>";
+      echo "
+      <div>
+      <div class='container carousel-inner no-padding'>";
         for($i=0;$i<$no_of_slides;$i++){
             echo "<div class='carousel-item "; if($i==0){echo " active'";} echo ">";
             // echo "<div class='carousel-item active>";
@@ -330,29 +239,34 @@ for($j=0;$j<$no_of_slides;$j++){
                     $book_count = $book_count + 1;
                 }
             }
+          }
             echo "
             
             
             </div>";
+            mysqli_free_results($fetch_books_query_resul);
         }
         
-      }
-      echo "</div>";
+      
+        echo "</div>
+        </div>
+        ";
+        
+        ?>
+        <a class='carousel-control-prev' href='#carouselExampleControls' role='button' data-slide='prev'>
+            <span class='carousel-control-prev-icon' aria-hidden='true'></span>
+            <span class='sr-only'>Previous</span>
+        </a>
+        <a class='carousel-control-next' href='#carouselExampleControls' role='button' data-slide='next'>
+            <span class='carousel-control-next-icon' aria-hidden='true'></span>
+            <span class='sr-only'>Next</span>
+        </a>
 
-      ?>
 
 
 
+ 
 
-    <a class='carousel-control-prev' href='#carouselExampleControls' role='button' data-slide='prev'>
-        <span class='carousel-control-prev-icon' aria-hidden='true'></span>
-        <span class='sr-only'>Previous</span>
-    </a>
-    <a class='carousel-control-next' href='#carouselExampleControls' role='button' data-slide='next'>
-        <span class='carousel-control-next-icon' aria-hidden='true'></span>
-        <span class='sr-only'>Next</span>
-    </ a>
-    </div> -->
 
     <!-- end of product slider 1 -->
 
@@ -360,7 +274,9 @@ for($j=0;$j<$no_of_slides;$j++){
 
 
     <!-- <div class="footer"></div> -->
+    
     <?php require "partials/_footer.php"; ?>
+     
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->

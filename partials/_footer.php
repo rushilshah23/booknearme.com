@@ -1,7 +1,9 @@
 <footer class="pt-4 my-md-5 pt-md-5 border-top text-light bg-dark">
     <div class="row px-5">
       <div class="col-12 col-md">
-        <img class="mb-2" src="../assets/pagemedia/logos/book1.png" alt="logo" width="50" height="50">
+        <img class="mb-2" src="/assets/pagemedia/logos/book1.png" alt="logo" width="50" height="50">
+        <!-- <img class="mb-2" src="../assets/pagemedia/logos/book1.png" alt="logo" width="50" height="50"> -->
+
         <small class="d-block mb-3 text-muted">© 2020-2021</small>
       </div>
       <div class="col-6 col-md">
