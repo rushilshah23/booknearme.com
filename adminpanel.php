@@ -13,7 +13,12 @@
   if(!$conn){
     die("sorry we failed to provide you information ". mysqli_connect_error());
   }else{
-    echo  "connection successful";
+    session_start();
+    if($_SESSION['accountType']!=3 && $_SESSION['email']!='admin@gmail.com'){
+      die("invalid credential ". mysqli_connect_error());
+      header("location:../loginsystem/login.php");
+    }
+   
   }
 
 
@@ -46,9 +51,10 @@
 
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
 
-    <title>Hello, world!</title>
+    <title>Admin Panel</title>
   </head>
   <body>
+    <?php require_once "./partials/_navbar.php"?>
     <div class="container">
       <table class="table table-hover" id="myTable">
         <thead>

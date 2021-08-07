@@ -24,7 +24,7 @@
                             $successalert = true;
                             $userid_query = "select user_id from seller_details where user_email = '$email'";
                             $userid_query_result = mysqli_query($conn,$userid_query);
-                            if(userid_query_result!=false){
+                            if($userid_query_result!=false){
                                 $user_details = mysqli_fetch_array($userid_query_result);
                                 session_start();
                                 $_SESSION['loggedin'] = true;
@@ -62,7 +62,7 @@
                             $successalert = true;
                             $userid_query = "select user_id from buyer_details where user_email = '$email'";
                             $userid_query_result = mysqli_query($conn,$userid_query);
-                            if(userid_query_result!=false){
+                            if($userid_query_result!=false){
                                 $user_details = mysqli_fetch_array($userid_query_result);
                                 session_start();
                                 $_SESSION['loggedin'] = true;
@@ -70,6 +70,43 @@
                                 $_SESSION['user_id'] = $user_details['user_id'];
                                 $_SESSION['accountType'] = $accountType;
                                 header("location:../buyeraccount.php");
+                            }else{
+                                $failurealert = true;
+                                $failure_error = "fail to receive user id";
+                            }
+
+                        }else{
+                            $failurealert = true;
+                            $failure_error = "invalid credentials";
+                        }
+                    }
+
+
+                }
+                else{
+                    $failurealert = true;
+                    $failure_error = "invalid credentials";
+                }
+            }else if($accountType==3){
+                $loginuser_query = "select * from seller_details where user_email = '$email'";
+                $loginuser_query_result = mysqli_query($conn,$loginuser_query);
+                $num = mysqli_num_rows($loginuser_query_result);
+                if($num == 1){
+                    while($row = mysqli_fetch_assoc($loginuser_query_result)){
+                        if(password_verify($password,$row['user_password'])){
+                            $successalert = true;
+                            $userid_query = "select user_id from seller_details where user_email = '$email'";
+                            $userid_query_result = mysqli_query($conn,$userid_query);
+                            if($userid_query_result!=false){
+                                $user_details = mysqli_fetch_array($userid_query_result);
+                                session_start();
+                                $_SESSION['loggedin'] = true;
+                                $_SESSION['email'] = $email;
+                                $_SESSION['user_id'] = $user_details['user_id'];
+                                // $_SESSION['accountType'] = $accountType;
+                                $_SESSION['accountType'] = $user_details['accountType'];
+
+                                header("location:../adminpanel.php");
                             }else{
                                 $failurealert = true;
                                 $failure_error = "fail to receive user id";
@@ -163,6 +200,8 @@
         <option selected>Choose...</option>
         <option value="1" selected>Buyer</option>
         <option value="2">Seller</option>
+        <option value="3">Admin</option>
+
 
     </select>
     </div>
